@@ -56,3 +56,12 @@ trafficInfo = {
 def personalWeightedSum(path):
 	result = 0
 	return result
+
+# paths is provided by Gaode API
+def optimalPath(paths):
+	min = 1000000000000000000
+	result = paths[0]
+	for path in paths:
+		if personalWeightedSum(path) < min:
+			result = path
+	return path
