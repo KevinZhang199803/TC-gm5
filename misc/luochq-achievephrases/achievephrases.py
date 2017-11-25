@@ -5,44 +5,60 @@ APP_ID = '10437334'
 API_KEY = 'wnbWILkse5iQBMlfc0S9xrFx'
 SECRET_KEY = '7dwOvserOKXL2560DDusDsFg5VXpu9t9'
 
-# client = AipNlp(APP_ID, API_KEY, SECRET_KEY)
-# data = client.lexer('我下午去看一场银翼杀手，然后吃个晚饭晚上8点半回公司')
-with open("./data.json",'r') as load_f:
-	data = json.load(load_f)
-
+client = AipNlp(APP_ID, API_KEY, SECRET_KEY)
+data = client.lexer('6点去食堂吃早饭8点去教室上课12点去长泰看电影14点去公交车站坐公交车')
+# with open("./data.json",'r') as load_f:
+	# data = json.load(load_f)
+print(data)
 classified={'verb':[],'noun':[]}
 listAll=[]
+locationList=['nz','n','nw','nt','nr','LOC','ORG']
 j=0
 while j<len(data['items']):
 	if data['items'][j]['pos']=='v':
 		listAll.append(data['items'][j])
-	if (data['items'][j]['pos']=='nz' or data['items'][j]['pos']=='n' or data['items'][j]['pos']=='nw' or data['items'][j]['pos']=='nt' or data['items'][j]['pos']=='nr'):
+	if (data['items'][j]['pos']in locationList ) or (data['items'][j]['ne']in locationList ):
 		listAll.append(data['items'][j])
 	if data['items'][j]['pos']=='TIME':
 		pass
 	j=j+1
 
-filter=['想','想要','要']
+filter=['想','想要','要','还要']
 
-criticalVerbs = ["去看", "看", "去", "回", "到", "唱", "参加", "开会", "上班", "上学", "上课", "买", "喝", "吃", "玩"]
+# criticalVerbs = ["去看", "看", "去", "回", "到", "唱", "参加", "开会", "上班", "上学", "上课", "买", "喝", "吃", "玩"]
 i=0;
 GeneralList=[]
 while i<len(listAll):
 	# if (i+1)!=len(listAll):
 	# print(listAll[i]['item'])
 	if i!=len(listAll)-1:
-		if (listAll[i]['pos']=='v') and (listAll[i+1]['pos']!='v') and (listAll[i]['pos'] not in filter):
-			
+
+		if (listAll[i]['pos']=='v') and (listAll[i+1]['pos']!='v') and (listAll[i]['item'] not in filter):
 			classified['verb'].append(listAll[i])
+		if (listAll[i]['pos']=='v') and (listAll[i+1]['pos']=='v') and (listAll[i]['item'] not in filter):
+			if (listAll[i]['item']=='去'):
+				pass
+			else:
+				classified['verb'].append(listAll[i])
+				GeneralList.append(classified)
+				classified={'verb':[],'noun':[]}
 			# print(classified)
 	if i==len(listAll)-1:
-		if (listAll[i]['pos']=='v') and (listAll[i+1]['pos']!='v') and (listAll[i]['pos'] not in filter):
+		if (listAll[i]['pos']=='v')  and (listAll[i]['pos'] not in filter):
 			classified['verb'].append(listAll[i])
-			
-	if (listAll[i]['pos']=='nz' or listAll[i]['pos']=='n' or listAll[i]['pos']=='nw' or listAll[i]['pos']=='nt' or listAll[i]['pos']=='nr'):
-		classified['noun'].append(listAll[i])
-		GeneralList.append(classified)
-		classified={'verb':[],'noun':[]}
+			GeneralList.append(classified)
+			classified={'verb':[],'noun':[]}
+	if i!=len(listAll)-1:
+		if (listAll[i]['pos'] in locationList) or (listAll[i]['ne'] in locationList):
+			classified['noun'].append(listAll[i])
+			if (listAll[i+1]['pos'] not in locationList) and  (listAll[i+1]['ne'] not in locationList):
+				GeneralList.append(classified)
+				classified={'verb':[],'noun':[]}
+	if i==len(listAll)-1:
+		if (listAll[i]['pos'] in locationList) or (listAll[i]['ne'] in locationList):
+			classified['noun'].append(listAll[i])
+			GeneralList.append(classified)
+			classified={'verb':[],'noun':[]}
 	i=i+1
 # print(GeneralList)
 def getlocation(str1):
