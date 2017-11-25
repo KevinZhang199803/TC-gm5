@@ -13,7 +13,7 @@ def ParsedTimePoint(timeStr, currentTime):
 	try:
 		intMinute = int(timeList[1])
 	except:
-		intMinut
+		intMinute=0
 	a = currentTime.replace(hour = intHour, minute = intMinute)
 	timePointObj = {
 		"startTime" : a, 
