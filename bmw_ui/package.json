@@ -1,0 +1,24 @@
+{
+  "name": "tc2017sh_gm5_bmw_ui",
+  "version": "1.0.0",
+  "description": "TechCrunch GeekMe5 BMW Challenge UI",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "demo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sjhstone/tc-gm5.git"
+  },
+  "keywords": [
+    "lbs",
+    "techcrunch",
+    "hackathon"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sjhstone/tc-gm5/issues"
+  },
+  "homepage": "https://github.com/sjhstone/tc-gm5#readme"
+}
