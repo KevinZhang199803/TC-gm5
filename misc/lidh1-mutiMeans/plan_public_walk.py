@@ -55,7 +55,7 @@ trafficInfo = {
 
 def personalWeightedSum(path):
 	result = 0
-	# to be implemented!!!!!!!!!!!!!!
+	# to be implemented!!!!!!!!!!!!!!!!!!!!!!!!!
 	return result
 
 # paths is provided by Gaode API
@@ -86,9 +86,16 @@ def firstPlan(origin, distination):
 	return result
 
 def secondPlan(origin, distination):
+	# to be implemented!!!!!!!!!!!!!!!!!!!!!!!!
 	# get the optimal path
 	# choose four nodes on the optimal path
 	# search specific locations near these nodes
 	# (according to personal preferences)
 	# recommend them to the user
 	# (make money by this)
+
+def execute(origin, distination):
+	print(firstPlan(origin, distination))
+	if userInput["user-preference"]["time-sensitivity"] < 60:
+		print(secondPlan(origin, distination))
+	return
