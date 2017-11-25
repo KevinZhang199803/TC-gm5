@@ -55,7 +55,10 @@ trafficInfo = {
 
 def personalWeightedSum(path):
 	result = 0
-	# to be implemented!!!!!!!!!!!!!!!!!!!!!!!!!
+	for step in path:
+		method = step["type"]
+		result += step["duration"] * userInput["user-preference"]["time-sensitivity"] + 
+		step["distance"] * trafficInfo[method]["price"] * userInput["user-preference"]["price-sensitivity"]
 	return result
 
 # paths is provided by Gaode API
