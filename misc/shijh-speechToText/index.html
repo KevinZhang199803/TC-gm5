@@ -1,0 +1,54 @@
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Speech2Text</title>
+
+</head>
+<body>
+    <p id="speech2txt-result"></p>
+
+    <script type="text/javascript">
+        var recognition = new webkitSpeechRecognition();
+
+        var final_transcript = '';
+
+        var speechResultDomNode = document.getElementById("speech2txt-result");
+
+        recognition.interimResults = false;
+        recognition.continuous = true;
+
+        recognition.lang = "cmn-Hans-CN";
+
+        recognition.onstart = function() {
+            console.log("recognition started");
+        }
+
+        recognition.onerror = function(event) {
+            console.error(event);
+        }
+
+        recognition.onresult = function(event) {
+            var interim_transcript = '';
+
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    final_transcript += event.results[i][0].transcript;
+                } else {
+                    interim_transcript += event.results[i][0].transcript;
+                }
+            }
+            speechResultDomNode.innerText = final_transcript;
+        };
+
+        function onStartButtonClicked(event) {
+            recognition.start();
+        }
+    </script>
+    
+    <button onclick="onStartButtonClicked();">Start</button>
+
+    
+</body>
+</html>
