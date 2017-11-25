@@ -55,6 +55,7 @@ trafficInfo = {
 
 def personalWeightedSum(path):
 	result = 0
+	# to be implemented!!!!!!!!!!!!!!
 	return result
 
 # paths is provided by Gaode API
@@ -65,3 +66,29 @@ def optimalPath(paths):
 		if personalWeightedSum(path) < min:
 			result = path
 	return path
+
+# this function is to get data 
+# provided by Gaode API
+# (this function is very possible to be implemented with Javascript interface
+# , and thus unnecessary)
+def getPaths(origin, distination):
+	result = {}
+	return result
+
+# return the optimal path 
+# considering personal
+# preferences
+def firstPlan(origin, distination):
+	# get paths from Gaode API
+	paths = getPaths(origin, distination)
+	result = optimalPath(paths)
+	# print(result)
+	return result
+
+def secondPlan(origin, distination):
+	# get the optimal path
+	# choose four nodes on the optimal path
+	# search specific locations near these nodes
+	# (according to personal preferences)
+	# recommend them to the user
+	# (make money by this)
