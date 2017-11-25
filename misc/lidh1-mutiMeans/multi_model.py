@@ -1,6 +1,6 @@
-# class user_input:
-# 	def __init__():
-# 		return
+# *************** compare all combinations of traffic methods
+# *************** and return the one with the least 
+# *************** weighted sum (with brute force)
 
 # each user can change parameters
 # in this scope freely
