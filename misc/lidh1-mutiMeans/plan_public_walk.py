@@ -55,21 +55,20 @@ trafficInfo = {
 
 def personalWeightedSum(path):
 	result = 0
-	for step in path:
+	for step in path["steps"].values():
+		print(step)
 		method = step["type"]
-		result += step["duration"] * userInput["user-preference"]["time-sensitivity"] + 
-			step["distance"] * trafficInfo[method]["price"] * 
-			userInput["user-preference"]["price-sensitivity"]
+		result += step["duration"] * userInput["user-preference"]["time-sensitivity"] + step["distance"] * trafficInfo[method]["price"] * userInput["user-preference"]["price-sensitivity"]
 	return result
 
 # paths is provided by Gaode API
 def optimalPath(paths):
 	min = 1000000000000000000
 	result = paths[0]
-	for path in paths:
-		if personalWeightedSum(path) < min:
-			result = path
-	return path
+	for i in paths:
+		if personalWeightedSum(paths[i]) < min:
+			result = paths[i]
+	return result
 
 # this function is to get data 
 # provided by Gaode API
@@ -97,9 +96,21 @@ def secondPlan(origin, distination):
 	# (according to personal preferences)
 	# recommend them to the user
 	# (make money by this)
+	return
 
 def execute(origin, distination):
 	print(firstPlan(origin, distination))
 	if userInput["user-preference"]["time-sensitivity"] < 60:
 		print(secondPlan(origin, distination))
 	return
+
+paths = {
+	0: { 
+		"steps": {
+			0: {"duration": 5, "type": "Walk", "distance": 13},
+			1: {"duration": 5, "type": "Bus", "distance": 40}
+		}, 
+	}
+}
+
+print(optimalPath(paths))
