@@ -15,6 +15,7 @@ APP_ID = '10437334'
 API_KEY = 'wnbWILkse5iQBMlfc0S9xrFx'
 SECRET_KEY = '7dwOvserOKXL2560DDusDsFg5VXpu9t9'
 
+
 def ParsedTimePoint(timeStr, currentTime):
 	timeList = timeStr.replace("时", ":").replace("点", ":").replace("分", "").replace("一刻", "15").replace("三刻", "45").replace("上午", "").replace("早上", "").replace("下午", "12+").replace("晚上", "12+").split(":")
 	intHour = eval(timeList[0])
@@ -55,17 +56,8 @@ def String2TimeObj(timeStr):
 	else:
 		return ParsedTimePoint(timeStr, currentTime)
 
-class QuizListViewForExaminee(viewsets.ReadOnlyModelViewSet):
-	queryset = Quiz.objects.all()
-	serializer_class = QuizSerializerForExaminee
 
-def TakeQuizView(request, quiz_id):
-	q = Quiz.objects.get(pk=quiz_id)
-	ps = q.getProblemSet()
-	ser = ProblemSerializerForExaminee(ps, many=True)
-	return JsonResponse(ser.data, safe=False)
-
-def QuizHandinView(request):
+def GetSentenceUnderstoodView(request):
 	# import json
 	if request.method == 'POST':
 		# ju=json.loads(request.body)
@@ -182,8 +174,6 @@ def QuizHandinView(request):
 				"allowedTime" : [p2j(i) for i in extractAllowedTime(action)]
 			}
 			return actionObj
-
-
 
 		def Naive2JSON(naiveList):
 			node = {"goals": [ParseAction(action) for action in naiveList]}
